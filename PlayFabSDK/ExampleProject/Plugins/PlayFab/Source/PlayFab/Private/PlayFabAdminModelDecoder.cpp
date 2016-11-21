@@ -16,6 +16,30 @@
 // Authentication
 //////////////////////////////////////////////////////
 
+FAdminGetPolicyResponse UPlayFabAdminModelDecoder::decodeGetPolicyResponseResponse(UPlayFabJsonObject* response)
+{
+    // Temp ustruct
+    FAdminGetPolicyResponse tempStruct;
+    UPlayFabJsonObject* dataObj = !(response->HasField("data")) ? nullptr : response->GetObjectField("data");
+
+    tempStruct.PolicyName = !(dataObj->HasField("PolicyName")) ? TEXT("") : dataObj->GetStringField("PolicyName");
+    tempStruct.Statements = !(dataObj->HasField("Statements")) ? TArray<UPlayFabJsonObject*>() : dataObj->GetObjectArrayField("Statements");
+
+    return tempStruct;
+}
+
+FAdminUpdatePolicyResponse UPlayFabAdminModelDecoder::decodeUpdatePolicyResponseResponse(UPlayFabJsonObject* response)
+{
+    // Temp ustruct
+    FAdminUpdatePolicyResponse tempStruct;
+    UPlayFabJsonObject* dataObj = !(response->HasField("data")) ? nullptr : response->GetObjectField("data");
+
+    tempStruct.PolicyName = !(dataObj->HasField("PolicyName")) ? TEXT("") : dataObj->GetStringField("PolicyName");
+    tempStruct.Statements = !(dataObj->HasField("Statements")) ? TArray<UPlayFabJsonObject*>() : dataObj->GetObjectArrayField("Statements");
+
+    return tempStruct;
+}
+
 
 
 ///////////////////////////////////////////////////////

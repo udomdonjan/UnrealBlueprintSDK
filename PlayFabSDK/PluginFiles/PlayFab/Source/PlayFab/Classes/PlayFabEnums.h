@@ -478,6 +478,13 @@ enum class ECurrency : uint8
     pfenum_ZWD UMETA(DisplayName = "ZWD"),
 };
 
+// Enum for EffectType
+UENUM(BlueprintType)
+enum class EEffectType : uint8
+{
+    pfenum_Allow UMETA(DisplayName = "Allow"),
+};
+
 // Enum for GameBuildStatus
 UENUM(BlueprintType)
 enum class EGameBuildStatus : uint8

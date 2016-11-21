@@ -60,6 +60,122 @@ FString UPlayFabAdminAPI::PercentEncode(const FString& Text)
 ///////////////////////////////////////////////////////
 // Authentication
 //////////////////////////////////////////////////////
+/** Gets the requested policy. */
+UPlayFabAdminAPI* UPlayFabAdminAPI::GetPolicy(FAdminGetPolicyRequest request,
+    FDelegateOnSuccessGetPolicy onSuccess,
+    FDelegateOnFailurePlayFabError onFailure,
+    UObject* customData)
+{
+    // Objects containing request data
+    UPlayFabAdminAPI* manager = NewObject<UPlayFabAdminAPI>();
+    UPlayFabJsonObject* OutRestJsonObj = NewObject<UPlayFabJsonObject>();
+    manager->mCustomData = customData;
+
+    // Assign delegates
+    manager->OnSuccessGetPolicy = onSuccess;
+    manager->OnFailure = onFailure;
+    manager->OnPlayFabResponse.AddDynamic(manager, &UPlayFabAdminAPI::HelperGetPolicy);
+
+    // Setup the request
+    manager->PlayFabRequestURL = "/Admin/GetPolicy";
+    manager->useSessionTicket = false;
+    manager->useSecretKey = true;
+
+    // Serialize all the request properties to json
+    if (request.PolicyName.IsEmpty() || request.PolicyName == "") {
+        OutRestJsonObj->SetFieldNull(TEXT("PolicyName"));
+    } else {
+        OutRestJsonObj->SetStringField(TEXT("PolicyName"), request.PolicyName);
+    }
+
+    // Add Request to manager
+    manager->SetRequestObject(OutRestJsonObj);
+
+    return manager;
+}
+
+// Implements FOnPlayFabAdminRequestCompleted
+void UPlayFabAdminAPI::HelperGetPolicy(FPlayFabBaseModel response, UObject* customData, bool successful)
+{
+    FPlayFabError error = response.responseError;
+    if (error.hasError)
+    {
+        if (OnFailure.IsBound())
+        {
+            OnFailure.Execute(error, customData);
+        }
+    }
+    else
+    {
+        FAdminGetPolicyResponse result = UPlayFabAdminModelDecoder::decodeGetPolicyResponseResponse(response.responseData);
+        if (OnSuccessGetPolicy.IsBound())
+        {
+            OnSuccessGetPolicy.Execute(result, mCustomData);
+        }
+    }
+}
+
+/** Changes a policy for a title */
+UPlayFabAdminAPI* UPlayFabAdminAPI::UpdatePolicy(FAdminUpdatePolicyRequest request,
+    FDelegateOnSuccessUpdatePolicy onSuccess,
+    FDelegateOnFailurePlayFabError onFailure,
+    UObject* customData)
+{
+    // Objects containing request data
+    UPlayFabAdminAPI* manager = NewObject<UPlayFabAdminAPI>();
+    UPlayFabJsonObject* OutRestJsonObj = NewObject<UPlayFabJsonObject>();
+    manager->mCustomData = customData;
+
+    // Assign delegates
+    manager->OnSuccessUpdatePolicy = onSuccess;
+    manager->OnFailure = onFailure;
+    manager->OnPlayFabResponse.AddDynamic(manager, &UPlayFabAdminAPI::HelperUpdatePolicy);
+
+    // Setup the request
+    manager->PlayFabRequestURL = "/Admin/UpdatePolicy";
+    manager->useSessionTicket = false;
+    manager->useSecretKey = true;
+
+    // Serialize all the request properties to json
+    if (request.PolicyName.IsEmpty() || request.PolicyName == "") {
+        OutRestJsonObj->SetFieldNull(TEXT("PolicyName"));
+    } else {
+        OutRestJsonObj->SetStringField(TEXT("PolicyName"), request.PolicyName);
+    }
+    if (request.Statements.Num() == 0) {
+        OutRestJsonObj->SetFieldNull(TEXT("Statements"));
+    } else {
+        OutRestJsonObj->SetObjectArrayField(TEXT("Statements"), request.Statements);
+    }
+    OutRestJsonObj->SetBoolField(TEXT("OverwritePolicy"), request.OverwritePolicy);
+
+    // Add Request to manager
+    manager->SetRequestObject(OutRestJsonObj);
+
+    return manager;
+}
+
+// Implements FOnPlayFabAdminRequestCompleted
+void UPlayFabAdminAPI::HelperUpdatePolicy(FPlayFabBaseModel response, UObject* customData, bool successful)
+{
+    FPlayFabError error = response.responseError;
+    if (error.hasError)
+    {
+        if (OnFailure.IsBound())
+        {
+            OnFailure.Execute(error, customData);
+        }
+    }
+    else
+    {
+        FAdminUpdatePolicyResponse result = UPlayFabAdminModelDecoder::decodeUpdatePolicyResponseResponse(response.responseData);
+        if (OnSuccessUpdatePolicy.IsBound())
+        {
+            OnSuccessUpdatePolicy.Execute(result, mCustomData);
+        }
+    }
+}
+
 
 ///////////////////////////////////////////////////////
 // Account Management

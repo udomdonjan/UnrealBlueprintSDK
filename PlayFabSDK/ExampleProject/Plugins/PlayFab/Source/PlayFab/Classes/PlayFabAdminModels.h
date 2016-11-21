@@ -22,6 +22,58 @@ class UPlayFabJsonObject;
 // Authentication
 //////////////////////////////////////////////////////
 
+USTRUCT(BlueprintType)
+struct FAdminGetPolicyRequest
+{
+    GENERATED_USTRUCT_BODY()
+public:
+    /** The name of the policy to read. Only supported name is 'ApiPolicy'. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayFab | Admin | Authentication Models")
+        FString PolicyName;
+};
+
+USTRUCT(BlueprintType)
+struct FAdminGetPolicyResponse
+{
+    GENERATED_USTRUCT_BODY()
+public:
+    /** The name of the policy read. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayFab | Admin | Authentication Models")
+        FString PolicyName;
+    /** The statements in the requested policy. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayFab | Admin | Authentication Models")
+        TArray<UPlayFabJsonObject*> Statements;
+};
+
+USTRUCT(BlueprintType)
+struct FAdminUpdatePolicyRequest
+{
+    GENERATED_USTRUCT_BODY()
+public:
+    /** The name of the policy being updated. Only supported name is 'ApiPolicy' */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayFab | Admin | Authentication Models")
+        FString PolicyName;
+    /** The new statements to include in the policy. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayFab | Admin | Authentication Models")
+        TArray<UPlayFabJsonObject*> Statements;
+    /** Whether to overwrite or append to the existing policy. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayFab | Admin | Authentication Models")
+        bool OverwritePolicy;
+};
+
+USTRUCT(BlueprintType)
+struct FAdminUpdatePolicyResponse
+{
+    GENERATED_USTRUCT_BODY()
+public:
+    /** The name of the policy that was updated. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayFab | Admin | Authentication Models")
+        FString PolicyName;
+    /** The statements included in the new version of the policy. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayFab | Admin | Authentication Models")
+        TArray<UPlayFabJsonObject*> Statements;
+};
+
 
 ///////////////////////////////////////////////////////
 // Account Management

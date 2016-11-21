@@ -47,6 +47,32 @@ public:
     ///////////////////////////////////////////////////////
     // Authentication
     //////////////////////////////////////////////////////
+    // callbacks
+    DECLARE_DYNAMIC_DELEGATE_TwoParams(FDelegateOnSuccessGetPolicy, FAdminGetPolicyResponse, result, UObject*, customData);
+
+    /** Gets the requested policy. */
+    UFUNCTION(BlueprintCallable, Category = "PlayFab | Admin | Authentication ", meta = (BlueprintInternalUseOnly = "true"))
+        static UPlayFabAdminAPI* GetPolicy(FAdminGetPolicyRequest request,
+            FDelegateOnSuccessGetPolicy onSuccess,
+            FDelegateOnFailurePlayFabError onFailure, UObject* customData);
+
+    // Implements FOnPlayFabAdminRequestCompleted
+    UFUNCTION(BlueprintCallable, Category = "PlayFab | Admin | Authentication ", meta = (BlueprintInternalUseOnly = "true"))
+        void HelperGetPolicy(FPlayFabBaseModel response, UObject* customData, bool successful);
+
+    // callbacks
+    DECLARE_DYNAMIC_DELEGATE_TwoParams(FDelegateOnSuccessUpdatePolicy, FAdminUpdatePolicyResponse, result, UObject*, customData);
+
+    /** Changes a policy for a title */
+    UFUNCTION(BlueprintCallable, Category = "PlayFab | Admin | Authentication ", meta = (BlueprintInternalUseOnly = "true"))
+        static UPlayFabAdminAPI* UpdatePolicy(FAdminUpdatePolicyRequest request,
+            FDelegateOnSuccessUpdatePolicy onSuccess,
+            FDelegateOnFailurePlayFabError onFailure, UObject* customData);
+
+    // Implements FOnPlayFabAdminRequestCompleted
+    UFUNCTION(BlueprintCallable, Category = "PlayFab | Admin | Authentication ", meta = (BlueprintInternalUseOnly = "true"))
+        void HelperUpdatePolicy(FPlayFabBaseModel response, UObject* customData, bool successful);
+
 
     ///////////////////////////////////////////////////////
     // Account Management
@@ -1280,6 +1306,8 @@ public:
     UObject* mCustomData;
 
     FDelegateOnFailurePlayFabError OnFailure;
+    FDelegateOnSuccessGetPolicy OnSuccessGetPolicy;
+    FDelegateOnSuccessUpdatePolicy OnSuccessUpdatePolicy;
     FDelegateOnSuccessBanUsers OnSuccessBanUsers;
     FDelegateOnSuccessGetUserAccountInfo OnSuccessGetUserAccountInfo;
     FDelegateOnSuccessGetUserBans OnSuccessGetUserBans;

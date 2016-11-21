@@ -30,6 +30,14 @@ public:
     // Authentication
     //////////////////////////////////////////////////////
 
+    /** Decode the GetPolicyResponse response object*/
+    UFUNCTION(BlueprintCallable, Category = "PlayFab | Admin | Authentication Models")
+        static FAdminGetPolicyResponse decodeGetPolicyResponseResponse(UPlayFabJsonObject* response);
+
+    /** Decode the UpdatePolicyResponse response object*/
+    UFUNCTION(BlueprintCallable, Category = "PlayFab | Admin | Authentication Models")
+        static FAdminUpdatePolicyResponse decodeUpdatePolicyResponseResponse(UPlayFabJsonObject* response);
+
 
 
     ///////////////////////////////////////////////////////
