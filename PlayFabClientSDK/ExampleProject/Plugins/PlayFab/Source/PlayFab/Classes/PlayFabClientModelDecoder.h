@@ -92,10 +92,6 @@ public:
     UFUNCTION(BlueprintCallable, Category = "PlayFab | Client | Account Management Models")
         static FClientGetPlayFabIDsFromTwitchIDsResult decodeGetPlayFabIDsFromTwitchIDsResultResponse(UPlayFabJsonObject* response);
 
-    /** Decode the GetUserCombinedInfoResult response object*/
-    UFUNCTION(BlueprintCallable, Category = "PlayFab | Client | Account Management Models")
-        static FClientGetUserCombinedInfoResult decodeGetUserCombinedInfoResultResponse(UPlayFabJsonObject* response);
-
     /** Decode the LinkAndroidDeviceIDResult response object*/
     UFUNCTION(BlueprintCallable, Category = "PlayFab | Client | Account Management Models")
         static FClientLinkAndroidDeviceIDResult decodeLinkAndroidDeviceIDResultResponse(UPlayFabJsonObject* response);

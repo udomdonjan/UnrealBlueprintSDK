@@ -364,19 +364,6 @@ public:
         void HelperGetPlayFabIDsFromTwitchIDs(FPlayFabBaseModel response, UObject* customData, bool successful);
 
     // callbacks
-    DECLARE_DYNAMIC_DELEGATE_TwoParams(FDelegateOnSuccessGetUserCombinedInfo, FClientGetUserCombinedInfoResult, result, UObject*, customData);
-
-    /** NOTE: This call will be deprecated soon. For fetching the data for a given user  use GetPlayerCombinedInfo. For looking up users from the client api, we are in the process of adding a new api call. Once that call is ready, this one will be deprecated.  Retrieves all requested data for a user in one unified request. By default, this API returns all  data for the locally signed-in user. The input parameters may be used to limit the data retrieved to any subset of the available data, as well as retrieve the available data for a different user. Note that certain data, including inventory, virtual currency balances, and personally identifying information, may only be retrieved for the locally signed-in user. In the example below, a request is made for the account details, virtual currency balances, and specified user data for the locally signed-in user. */
-    UFUNCTION(BlueprintCallable, Category = "PlayFab | Client | Account Management ", meta = (BlueprintInternalUseOnly = "true"))
-        static UPlayFabClientAPI* GetUserCombinedInfo(FClientGetUserCombinedInfoRequest request,
-            FDelegateOnSuccessGetUserCombinedInfo onSuccess,
-            FDelegateOnFailurePlayFabError onFailure, UObject* customData);
-
-    // Implements FOnPlayFabClientRequestCompleted
-    UFUNCTION(BlueprintCallable, Category = "PlayFab | Client | Account Management ", meta = (BlueprintInternalUseOnly = "true"))
-        void HelperGetUserCombinedInfo(FPlayFabBaseModel response, UObject* customData, bool successful);
-
-    // callbacks
     DECLARE_DYNAMIC_DELEGATE_TwoParams(FDelegateOnSuccessLinkAndroidDeviceID, FClientLinkAndroidDeviceIDResult, result, UObject*, customData);
 
     /** Links the Android device identifier to the user's PlayFab account */
@@ -1739,7 +1726,6 @@ public:
     FDelegateOnSuccessGetPlayFabIDsFromKongregateIDs OnSuccessGetPlayFabIDsFromKongregateIDs;
     FDelegateOnSuccessGetPlayFabIDsFromSteamIDs OnSuccessGetPlayFabIDsFromSteamIDs;
     FDelegateOnSuccessGetPlayFabIDsFromTwitchIDs OnSuccessGetPlayFabIDsFromTwitchIDs;
-    FDelegateOnSuccessGetUserCombinedInfo OnSuccessGetUserCombinedInfo;
     FDelegateOnSuccessLinkAndroidDeviceID OnSuccessLinkAndroidDeviceID;
     FDelegateOnSuccessLinkCustomID OnSuccessLinkCustomID;
     FDelegateOnSuccessLinkFacebookAccount OnSuccessLinkFacebookAccount;

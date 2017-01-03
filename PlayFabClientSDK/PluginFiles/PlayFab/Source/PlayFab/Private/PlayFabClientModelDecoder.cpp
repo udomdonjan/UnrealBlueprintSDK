@@ -183,25 +183,6 @@ FClientGetPlayFabIDsFromTwitchIDsResult UPlayFabClientModelDecoder::decodeGetPla
     return tempStruct;
 }
 
-FClientGetUserCombinedInfoResult UPlayFabClientModelDecoder::decodeGetUserCombinedInfoResultResponse(UPlayFabJsonObject* response)
-{
-    // Temp ustruct
-    FClientGetUserCombinedInfoResult tempStruct;
-    UPlayFabJsonObject* dataObj = !(response->HasField("data")) ? nullptr : response->GetObjectField("data");
-
-    tempStruct.PlayFabId = !(dataObj->HasField("PlayFabId")) ? TEXT("") : dataObj->GetStringField("PlayFabId");
-    tempStruct.AccountInfo = !(dataObj->HasField("AccountInfo")) ? nullptr : dataObj->GetObjectField("AccountInfo");
-    tempStruct.Inventory = !(dataObj->HasField("Inventory")) ? TArray<UPlayFabJsonObject*>() : dataObj->GetObjectArrayField("Inventory");
-    tempStruct.VirtualCurrency = !(dataObj->HasField("VirtualCurrency")) ? nullptr : dataObj->GetObjectField("VirtualCurrency");
-    tempStruct.VirtualCurrencyRechargeTimes = !(dataObj->HasField("VirtualCurrencyRechargeTimes")) ? nullptr : dataObj->GetObjectField("VirtualCurrencyRechargeTimes");
-    tempStruct.Data = !(dataObj->HasField("Data")) ? nullptr : dataObj->GetObjectField("Data");
-    tempStruct.DataVersion = !(dataObj->HasField("DataVersion")) ? 0 : int(dataObj->GetNumberField("DataVersion"));
-    tempStruct.ReadOnlyData = !(dataObj->HasField("ReadOnlyData")) ? nullptr : dataObj->GetObjectField("ReadOnlyData");
-    tempStruct.ReadOnlyDataVersion = !(dataObj->HasField("ReadOnlyDataVersion")) ? 0 : int(dataObj->GetNumberField("ReadOnlyDataVersion"));
-
-    return tempStruct;
-}
-
 FClientLinkAndroidDeviceIDResult UPlayFabClientModelDecoder::decodeLinkAndroidDeviceIDResultResponse(UPlayFabJsonObject* response)
 {
     // Temp ustruct

@@ -146,7 +146,6 @@ bool APfTestActor::ClassSetup()
         FJsonSerializer::Deserialize(Reader, JsonObject);
         playFabSettings->setGameTitleId(JsonObject->GetStringField(TEXT("titleId")));
         playFabSettings->setApiSecretKey(JsonObject->GetStringField(TEXT("developerSecretKey")));
-        TITLE_CAN_UPDATE_SETTINGS = JsonObject->GetStringField(TEXT("titleCanUpdateSettings")).ToLower().Contains("true");
         userEmail = JsonObject->GetStringField(TEXT("userEmail"));
     }
     else
@@ -157,7 +156,6 @@ bool APfTestActor::ClassSetup()
         // Populate this section with real information, if you're not using the testTitleData.json file (or are using a device)
         playFabSettings->setGameTitleId(TEXT("")); // Without a titleId, your game will do terrible things (usually crash)
         playFabSettings->setApiSecretKey(TEXT("")); // Non-client api calls will all crash without a secret key
-        TITLE_CAN_UPDATE_SETTINGS = true; // Make sure this is enabled in your title, found in the "Settings" section, "API Features" section of PlayFab Game Manager
         userEmail = "yourEmail"; // This is the email for the user
     }
 

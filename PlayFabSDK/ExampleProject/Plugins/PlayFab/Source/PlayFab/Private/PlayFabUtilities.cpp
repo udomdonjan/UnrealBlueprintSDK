@@ -287,6 +287,9 @@ FString UPlayFabUtilities::getErrorText(int32 code)
     case 1260: returnText = "NoSecretKeyEnabledForCloudScript"; break;
     case 1261: returnText = "TaskNotFound"; break;
     case 1262: returnText = "TaskInstanceNotFound"; break;
+    case 1263: returnText = "InvalidIdentityProviderId"; break;
+    case 1264: returnText = "MisconfiguredIdentityProvider"; break;
+    case 1265: returnText = "InvalidScheduledTaskType"; break;
     }
 
     // Return the text
