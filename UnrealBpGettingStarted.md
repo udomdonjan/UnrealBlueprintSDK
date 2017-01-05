@@ -23,7 +23,7 @@ Unreal Project Setup
       * Select all the optons as seen here:
         * New Project tab, C++ sub-tab, No Starter Content
         * Remember your path - referenced as {UeBpLocation} for the rest of this guide
-        * ![Unreal image](/images/Unreal/NewProjectBp.png)
+        * ![Unreal image](/Images/Unreal/NewProjectBp.png)
       * This will launch an Unreal Editor window, and Visual Studio
         * Stop, and close everything
 * Install the PlayFab Client Plugin into your project
@@ -36,7 +36,7 @@ Unreal Project Setup
     * Navigate back up to {UeBpLocation}, and right-click your "GettingStartedUeBp.uproject" (your .uproject file name will match your project name from earlier)
     * Select "Generate Visual Studio project files"
     * When the popup completes, re-open GettingStartedUeBp.sln in Visual Studio
-    * ![Unreal image](/images/Unreal/GenVsProjBp.png)
+    * ![Unreal image](/Images/Unreal/GenVsProjBp.png)
 * PlayFab Installation Complete!
 
 Set up your first API call
@@ -45,9 +45,9 @@ Set up your first API call
 This guide will provide the minimum steps to make your first PlayFab API call. Confirmation will be done via an on-screen debug print.
 
 * Start by opening the level blueprint
-  * ![Unreal image](/images/Unreal/LevelBlueprint.jpg)
+  * ![Unreal image](/Images/Unreal/LevelBlueprint.jpg)
   * Use the existing "Event BeginPlay" node, and build the following structure:
-    * ![Unreal image](/images/Unreal/LoginBps.png)
+    * ![Unreal image](/Images/Unreal/LoginBps.png)
 * Save the blueprint, and close the blueprint editor window
 * Save the level
 
@@ -56,7 +56,7 @@ Finish and Execute
 
 * Push the play button
 * When you execute this program, you should get the following output:
-  * ![Unreal image](/images/Unreal/Output.png)
+  * ![Unreal image](/Images/Unreal/Output.png)
 * Congratulations, you made your first successful API call!
 * Done! Press any key to close
 
