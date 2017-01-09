@@ -3861,7 +3861,7 @@ void UPlayFabClientAPI::HelperAddUserVirtualCurrency(FPlayFabBaseModel response,
     }
 }
 
-/** Confirms with the payment provider that the purchase was approved (if applicable) and adjusts inventory and virtual currency balances as appropriate */
+/** Confirms with the payment provider that the purchase was approved (if applicable) and adjusts inventory and  virtual currency balances as appropriate */
 UPlayFabClientAPI* UPlayFabClientAPI::ConfirmPurchase(FClientConfirmPurchaseRequest request,
     FDelegateOnSuccessConfirmPurchase onSuccess,
     FDelegateOnFailurePlayFabError onFailure,
@@ -4206,7 +4206,7 @@ void UPlayFabClientAPI::HelperPayForPurchase(FPlayFabBaseModel response, UObject
     }
 }
 
-/** Buys a single item with virtual currency. You must specify both the virtual currency to use to purchase, as well as what the client believes the price to be. This lets the server fail the purchase if the price has changed. */
+/** Buys a single item with virtual currency. You must specify both the virtual currency to use to purchase,  as well as what the client believes the price to be. This lets the server fail the purchase if the price has changed. */
 UPlayFabClientAPI* UPlayFabClientAPI::PurchaseItem(FClientPurchaseItemRequest request,
     FDelegateOnSuccessPurchaseItem onSuccess,
     FDelegateOnFailurePlayFabError onFailure,
