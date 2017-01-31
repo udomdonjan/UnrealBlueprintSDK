@@ -290,6 +290,12 @@ FString UPlayFabUtilities::getErrorText(int32 code)
     case 1263: returnText = "InvalidIdentityProviderId"; break;
     case 1264: returnText = "MisconfiguredIdentityProvider"; break;
     case 1265: returnText = "InvalidScheduledTaskType"; break;
+    case 1266: returnText = "BillingInformationRequired"; break;
+    case 1267: returnText = "LimitedEditionItemUnavailable"; break;
+    case 1268: returnText = "InvalidAdPlacementAndReward"; break;
+    case 1269: returnText = "AllAdPlacementViewsAlreadyConsumed"; break;
+    case 1270: returnText = "GoogleOAuthNotConfiguredForTitle"; break;
+    case 1271: returnText = "GoogleOAuthError"; break;
     }
 
     // Return the text

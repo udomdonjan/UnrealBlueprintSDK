@@ -1450,7 +1450,7 @@ struct FServerSetGameServerInstanceDataRequest
 {
     GENERATED_USTRUCT_BODY()
 public:
-    /** Unique identifier of the Game Instance to be updated. */
+    /** Unique identifier of the Game Instance to be updated, in decimal format. */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayFab | Server | Matchmaking APIs Models")
         FString LobbyId;
     /** Custom data to set for the specified game server instance. */
@@ -1470,7 +1470,7 @@ struct FServerSetGameServerInstanceStateRequest
 {
     GENERATED_USTRUCT_BODY()
 public:
-    /** Unique identifier of the Game Instance to be updated. */
+    /** Unique identifier of the Game Instance to be updated, in decimal format. */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayFab | Server | Matchmaking APIs Models")
         FString LobbyId;
     /** State to set for the specified game server instance. */

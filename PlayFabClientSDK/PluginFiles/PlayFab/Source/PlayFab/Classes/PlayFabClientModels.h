@@ -158,7 +158,10 @@ struct FClientLoginWithGoogleAccountRequest
 {
     GENERATED_USTRUCT_BODY()
 public:
-    /** Unique token (https://developers.google.com/android/reference/com/google/android/gms/auth/GoogleAuthUtil#public-methods) from Google Play for the user. */
+    /** OAuth 2.0 server authentication code obtained on the client by calling the getServerAuthCode() (https://developers.google.com/identity/sign-in/android/offline-access) Google client API. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayFab | Client | Authentication Models")
+        FString ServerAuthCode;
+    /** OAuth 2.0 access token obtained on the client by calling the getAccessToken() Google client API. */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayFab | Client | Authentication Models")
         FString AccessToken;
     /** Automatically create a PlayFab account if one is not currently linked to this Google account. */
@@ -633,7 +636,10 @@ struct FClientLinkGoogleAccountRequest
 {
     GENERATED_USTRUCT_BODY()
 public:
-    /** Unique token (https://developers.google.com/android/reference/com/google/android/gms/auth/GoogleAuthUtil#public-methods) from Google Play for the user. */
+    /** Server authentication code obtained on the client by calling getServerAuthCode() (https://developers.google.com/identity/sign-in/android/offline-access) from Google Play for the user. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayFab | Client | Account Management Models")
+        FString ServerAuthCode;
+    /** OAuth 2.0 access token obtained on the client by calling the getAccessToken() Google client API. */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayFab | Client | Account Management Models")
         FString AccessToken;
     /** If another user is already linked to the account, unlink the other user and re-link. */

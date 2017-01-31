@@ -424,7 +424,7 @@ void UPlayFabClientAPI::HelperLoginWithGameCenter(FPlayFabBaseModel response, UO
     }
 }
 
-/** Signs the user in using a Google account access token(https://developers.google.com/android/reference/com/google/android/gms/auth/GoogleAuthUtil#public-methods), returning a session identifier that can subsequently be used for API calls which require an authenticated user */
+/** Signs the user in using their Google account credentials */
 UPlayFabClientAPI* UPlayFabClientAPI::LoginWithGoogleAccount(FClientLoginWithGoogleAccountRequest request,
     FDelegateOnSuccessLoginWithGoogleAccount onSuccess,
     FDelegateOnFailurePlayFabError onFailure,
@@ -448,6 +448,11 @@ UPlayFabClientAPI* UPlayFabClientAPI::LoginWithGoogleAccount(FClientLoginWithGoo
 
     // Serialize all the request properties to json
     OutRestJsonObj->SetStringField(TEXT("TitleId"), IPlayFab::Get().getGameTitleId());
+    if (request.ServerAuthCode.IsEmpty() || request.ServerAuthCode == "") {
+        OutRestJsonObj->SetFieldNull(TEXT("ServerAuthCode"));
+    } else {
+        OutRestJsonObj->SetStringField(TEXT("ServerAuthCode"), request.ServerAuthCode);
+    }
     if (request.AccessToken.IsEmpty() || request.AccessToken == "") {
         OutRestJsonObj->SetFieldNull(TEXT("AccessToken"));
     } else {
@@ -1752,7 +1757,7 @@ void UPlayFabClientAPI::HelperLinkGameCenterAccount(FPlayFabBaseModel response, 
     }
 }
 
-/** Links the currently signed-in user account to the Google account specified by the Google account access token (https://developers.google.com/android/reference/com/google/android/gms/auth/GoogleAuthUtil#public-methods). */
+/** Links the currently signed-in user account to their Google account, using their Google account credentials */
 UPlayFabClientAPI* UPlayFabClientAPI::LinkGoogleAccount(FClientLinkGoogleAccountRequest request,
     FDelegateOnSuccessLinkGoogleAccount onSuccess,
     FDelegateOnFailurePlayFabError onFailure,
@@ -1774,6 +1779,11 @@ UPlayFabClientAPI* UPlayFabClientAPI::LinkGoogleAccount(FClientLinkGoogleAccount
     manager->useSecretKey = false;
 
     // Serialize all the request properties to json
+    if (request.ServerAuthCode.IsEmpty() || request.ServerAuthCode == "") {
+        OutRestJsonObj->SetFieldNull(TEXT("ServerAuthCode"));
+    } else {
+        OutRestJsonObj->SetStringField(TEXT("ServerAuthCode"), request.ServerAuthCode);
+    }
     if (request.AccessToken.IsEmpty() || request.AccessToken == "") {
         OutRestJsonObj->SetFieldNull(TEXT("AccessToken"));
     } else {
@@ -6099,7 +6109,7 @@ void UPlayFabClientAPI::HelperExecuteCloudScript(FPlayFabBaseModel response, UOb
 ///////////////////////////////////////////////////////
 // Content
 //////////////////////////////////////////////////////
-/** This API retrieves a pre-signed URL for accessing a content file for the title. A subsequent  HTTP GET to the returned URL will attempt to download the content. A HEAD query to the returned URL will attempt to  retrieve the metadata of the content. Note that a successful result does not guarantee the existence of this content -  if it has not been uploaded, the query to retrieve the data will fail. See this post for more information:  https://community.playfab.com/hc/en-us/community/posts/205469488-How-to-upload-files-to-PlayFab-s-Content-Service */
+/** This API retrieves a pre-signed URL for accessing a content file for the title. A subsequent  HTTP GET to the returned URL will attempt to download the content. A HEAD query to the returned URL will attempt to  retrieve the metadata of the content. Note that a successful result does not guarantee the existence of this content -  if it has not been uploaded, the query to retrieve the data will fail. See this post for more information:  https://community.playfab.com/hc/en-us/community/posts/205469488-How-to-upload-files-to-PlayFab-s-Content-Service.  Also, please be aware that the Content service is specifically PlayFab's CDN offering, for which standard CDN rates apply. */
 UPlayFabClientAPI* UPlayFabClientAPI::GetContentDownloadUrl(FClientGetContentDownloadUrlRequest request,
     FDelegateOnSuccessGetContentDownloadUrl onSuccess,
     FDelegateOnFailurePlayFabError onFailure,
