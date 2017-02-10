@@ -411,7 +411,7 @@ public:
 
     /** Updates the publisher-specific custom data for the user which cannot be accessed by the client */
     UFUNCTION(BlueprintCallable, Category = "PlayFab | Server | Player Data Management ", meta = (BlueprintInternalUseOnly = "true"))
-        static UPlayFabServerAPI* UpdateUserPublisherInternalData(FServerUpdateUserInternalDataRequest request,
+        static UPlayFabServerAPI* UpdateUserPublisherInternalData(FServerUpdateUserDataRequest request,
             FDelegateOnSuccessUpdateUserPublisherInternalData onSuccess,
             FDelegateOnFailurePlayFabError onFailure, UObject* customData);
 
@@ -898,6 +898,19 @@ public:
     // Implements FOnPlayFabServerRequestCompleted
     UFUNCTION(BlueprintCallable, Category = "PlayFab | Server | Friend List Management ", meta = (BlueprintInternalUseOnly = "true"))
         void HelperRemoveFriend(FPlayFabBaseModel response, UObject* customData, bool successful);
+
+    // callbacks
+    DECLARE_DYNAMIC_DELEGATE_TwoParams(FDelegateOnSuccessSetFriendTags, FServerEmptyResult, result, UObject*, customData);
+
+    /** Updates the tag list for a specified user in the friend list of another user */
+    UFUNCTION(BlueprintCallable, Category = "PlayFab | Server | Friend List Management ", meta = (BlueprintInternalUseOnly = "true"))
+        static UPlayFabServerAPI* SetFriendTags(FServerSetFriendTagsRequest request,
+            FDelegateOnSuccessSetFriendTags onSuccess,
+            FDelegateOnFailurePlayFabError onFailure, UObject* customData);
+
+    // Implements FOnPlayFabServerRequestCompleted
+    UFUNCTION(BlueprintCallable, Category = "PlayFab | Server | Friend List Management ", meta = (BlueprintInternalUseOnly = "true"))
+        void HelperSetFriendTags(FPlayFabBaseModel response, UObject* customData, bool successful);
 
 
     ///////////////////////////////////////////////////////
@@ -1551,6 +1564,7 @@ public:
     FDelegateOnSuccessAddFriend OnSuccessAddFriend;
     FDelegateOnSuccessGetFriendsList OnSuccessGetFriendsList;
     FDelegateOnSuccessRemoveFriend OnSuccessRemoveFriend;
+    FDelegateOnSuccessSetFriendTags OnSuccessSetFriendTags;
     FDelegateOnSuccessDeregisterGame OnSuccessDeregisterGame;
     FDelegateOnSuccessNotifyMatchmakerPlayerLeft OnSuccessNotifyMatchmakerPlayerLeft;
     FDelegateOnSuccessRedeemMatchmakerTicket OnSuccessRedeemMatchmakerTicket;

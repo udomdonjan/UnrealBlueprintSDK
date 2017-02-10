@@ -1319,6 +1319,22 @@ public:
         FString PlayFabId;
 };
 
+USTRUCT(BlueprintType)
+struct FServerSetFriendTagsRequest
+{
+    GENERATED_USTRUCT_BODY()
+public:
+    /** PlayFab identifier of the player whose friend is to be updated. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayFab | Server | Friend List Management Models")
+        FString PlayFabId;
+    /** PlayFab identifier of the friend account to which the tag(s) should be applied. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayFab | Server | Friend List Management Models")
+        FString FriendPlayFabId;
+    /** Array of tags to set on the friend account. */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayFab | Server | Friend List Management Models")
+        FString Tags;
+};
+
 
 ///////////////////////////////////////////////////////
 // Matchmaking APIs

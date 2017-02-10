@@ -1701,7 +1701,7 @@ void UPlayFabServerAPI::HelperUpdateUserPublisherData(FPlayFabBaseModel response
 }
 
 /** Updates the publisher-specific custom data for the user which cannot be accessed by the client */
-UPlayFabServerAPI* UPlayFabServerAPI::UpdateUserPublisherInternalData(FServerUpdateUserInternalDataRequest request,
+UPlayFabServerAPI* UPlayFabServerAPI::UpdateUserPublisherInternalData(FServerUpdateUserDataRequest request,
     FDelegateOnSuccessUpdateUserPublisherInternalData onSuccess,
     FDelegateOnFailurePlayFabError onFailure,
     UObject* customData)
@@ -1736,6 +1736,9 @@ UPlayFabServerAPI* UPlayFabServerAPI::UpdateUserPublisherInternalData(FServerUpd
         FString(request.KeysToRemove).ParseIntoArray(KeysToRemoveArray, TEXT(","), false);
         OutRestJsonObj->SetStringArrayField(TEXT("KeysToRemove"), KeysToRemoveArray);
     }
+    FString temp_Permission;
+    if (GetEnumValueToString<EUserDataPermission>(TEXT("EUserDataPermission"), request.Permission, temp_Permission))
+        OutRestJsonObj->SetStringField(TEXT("Permission"), temp_Permission);
 
     // Add Request to manager
     manager->SetRequestObject(OutRestJsonObj);
@@ -4063,6 +4066,74 @@ void UPlayFabServerAPI::HelperRemoveFriend(FPlayFabBaseModel response, UObject* 
         if (OnSuccessRemoveFriend.IsBound())
         {
             OnSuccessRemoveFriend.Execute(result, mCustomData);
+        }
+    }
+}
+
+/** Updates the tag list for a specified user in the friend list of another user */
+UPlayFabServerAPI* UPlayFabServerAPI::SetFriendTags(FServerSetFriendTagsRequest request,
+    FDelegateOnSuccessSetFriendTags onSuccess,
+    FDelegateOnFailurePlayFabError onFailure,
+    UObject* customData)
+{
+    // Objects containing request data
+    UPlayFabServerAPI* manager = NewObject<UPlayFabServerAPI>();
+    UPlayFabJsonObject* OutRestJsonObj = NewObject<UPlayFabJsonObject>();
+    manager->mCustomData = customData;
+
+    // Assign delegates
+    manager->OnSuccessSetFriendTags = onSuccess;
+    manager->OnFailure = onFailure;
+    manager->OnPlayFabResponse.AddDynamic(manager, &UPlayFabServerAPI::HelperSetFriendTags);
+
+    // Setup the request
+    manager->PlayFabRequestURL = "/Server/SetFriendTags";
+    manager->useSessionTicket = false;
+    manager->useSecretKey = true;
+
+    // Serialize all the request properties to json
+    if (request.PlayFabId.IsEmpty() || request.PlayFabId == "") {
+        OutRestJsonObj->SetFieldNull(TEXT("PlayFabId"));
+    } else {
+        OutRestJsonObj->SetStringField(TEXT("PlayFabId"), request.PlayFabId);
+    }
+    if (request.FriendPlayFabId.IsEmpty() || request.FriendPlayFabId == "") {
+        OutRestJsonObj->SetFieldNull(TEXT("FriendPlayFabId"));
+    } else {
+        OutRestJsonObj->SetStringField(TEXT("FriendPlayFabId"), request.FriendPlayFabId);
+    }
+    // Check to see if string is empty
+    if (request.Tags.IsEmpty() || request.Tags == "") {
+        OutRestJsonObj->SetFieldNull(TEXT("Tags"));
+    } else {
+        TArray<FString> TagsArray;
+        FString(request.Tags).ParseIntoArray(TagsArray, TEXT(","), false);
+        OutRestJsonObj->SetStringArrayField(TEXT("Tags"), TagsArray);
+    }
+
+    // Add Request to manager
+    manager->SetRequestObject(OutRestJsonObj);
+
+    return manager;
+}
+
+// Implements FOnPlayFabServerRequestCompleted
+void UPlayFabServerAPI::HelperSetFriendTags(FPlayFabBaseModel response, UObject* customData, bool successful)
+{
+    FPlayFabError error = response.responseError;
+    if (error.hasError)
+    {
+        if (OnFailure.IsBound())
+        {
+            OnFailure.Execute(error, customData);
+        }
+    }
+    else
+    {
+        FServerEmptyResult result = UPlayFabServerModelDecoder::decodeEmptyResultResponse(response.responseData);
+        if (OnSuccessSetFriendTags.IsBound())
+        {
+            OnSuccessSetFriendTags.Execute(result, mCustomData);
         }
     }
 }
